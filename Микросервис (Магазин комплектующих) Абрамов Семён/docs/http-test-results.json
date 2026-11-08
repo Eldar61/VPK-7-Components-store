@@ -1,0 +1,353 @@
+{
+  "passed": 28,
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/catalog",
+      "status": 200,
+      "durationMs": 259
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "durationMs": 100
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/register",
+      "status": 200,
+      "durationMs": 53
+    },
+    {
+      "method": "GET",
+      "path": "/api/products",
+      "status": 401,
+      "durationMs": 3
+    },
+    {
+      "method": "GET",
+      "path": "/api/products",
+      "status": 200,
+      "durationMs": 22
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/analytics?from=2026-01-01T00:00:00Z&to=2026-01-02T00:00:00Z",
+      "status": 403,
+      "durationMs": 22
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/products",
+      "status": 201,
+      "durationMs": 15
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/analytics?from=2026-11-07T12%3A55%3A15.718Z&to=2026-11-09T12%3A55%3A15.719Z&group=day",
+      "status": 200,
+      "durationMs": 30
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 400,
+      "durationMs": 9
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 400,
+      "durationMs": 4
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 200,
+      "durationMs": 15
+    },
+    {
+      "method": "POST",
+      "path": "/api/quotes",
+      "status": 200,
+      "durationMs": 104
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 200,
+      "durationMs": 6
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/users/27049314-ad91-475d-a2f9-295b07231370/customer-type",
+      "status": 403,
+      "durationMs": 6
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/users/27049314-ad91-475d-a2f9-295b07231370/customer-type",
+      "status": 200,
+      "durationMs": 37
+    },
+    {
+      "method": "POST",
+      "path": "/api/quotes",
+      "status": 200,
+      "durationMs": 5
+    },
+    {
+      "method": "POST",
+      "path": "/api/customer/quotes",
+      "status": 200,
+      "durationMs": 12
+    },
+    {
+      "method": "POST",
+      "path": "/api/quotes",
+      "status": 400,
+      "durationMs": 3
+    },
+    {
+      "method": "POST",
+      "path": "/api/quotes",
+      "status": 400,
+      "durationMs": 2
+    },
+    {
+      "method": "POST",
+      "path": "/api/quotes",
+      "status": 400,
+      "durationMs": 2
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts",
+      "status": 200,
+      "durationMs": 49
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts",
+      "status": 200,
+      "durationMs": 4
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts",
+      "status": 409,
+      "durationMs": 3
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts",
+      "status": 200,
+      "durationMs": 6
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/analytics?from=2026-11-07T12%3A55%3A15.718Z&to=2026-11-09T12%3A55%3A15.719Z&group=day",
+      "status": 200,
+      "durationMs": 4
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 409,
+      "durationMs": 6
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/cd82d6d4-546b-4957-944f-9a4477694222/cancel",
+      "status": 200,
+      "durationMs": 6
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/c25c3772-3d14-48d2-9d1c-8106776740e9/reserve",
+      "status": 200,
+      "durationMs": 6
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/c25c3772-3d14-48d2-9d1c-8106776740e9/confirm",
+      "status": 200,
+      "durationMs": 46
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/analytics?from=2026-11-07T12%3A55%3A15.718Z&to=2026-11-09T12%3A55%3A15.719Z&group=day",
+      "status": 200,
+      "durationMs": 8
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/products",
+      "status": 200,
+      "durationMs": 22
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/c25c3772-3d14-48d2-9d1c-8106776740e9/confirm",
+      "status": 200,
+      "durationMs": 4
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/analytics?from=2026-11-07T12%3A55%3A15.718Z&to=2026-11-09T12%3A55%3A15.719Z&group=day",
+      "status": 200,
+      "durationMs": 3
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/c25c3772-3d14-48d2-9d1c-8106776740e9/confirm",
+      "status": 409,
+      "durationMs": 3
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 200,
+      "durationMs": 5
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442/archive",
+      "status": 204,
+      "durationMs": 11
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/analytics?from=2026-11-07T12%3A55%3A15.718Z&to=2026-11-09T12%3A55%3A15.719Z&group=day",
+      "status": 200,
+      "durationMs": 3
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 200,
+      "durationMs": 4
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts",
+      "status": 200,
+      "durationMs": 5
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 200,
+      "durationMs": 5
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/2765ab09-72aa-4a66-bca2-d4ff003d537e/reserve",
+      "status": 409,
+      "durationMs": 4
+    },
+    {
+      "method": "GET",
+      "path": "/api/carts/2765ab09-72aa-4a66-bca2-d4ff003d537e",
+      "status": 200,
+      "durationMs": 3
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts",
+      "status": 200,
+      "durationMs": 5
+    },
+    {
+      "method": "GET",
+      "path": "/api/products?ids=91475241-15b7-4271-a32a-45356dd32428",
+      "status": 200,
+      "durationMs": 8
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/3ab9e11a-e356-48d5-ad5a-4f33c689ab0b/reserve",
+      "status": 409,
+      "durationMs": 5
+    },
+    {
+      "method": "GET",
+      "path": "/api/products?ids=91475241-15b7-4271-a32a-45356dd32428",
+      "status": 200,
+      "durationMs": 2
+    },
+    {
+      "method": "GET",
+      "path": "/api/customer/carts/c25c3772-3d14-48d2-9d1c-8106776740e9",
+      "status": 404,
+      "durationMs": 5
+    },
+    {
+      "method": "PUT",
+      "path": "/api/admin/products/d26cb0e0-6f5e-4f86-acb2-07ca4f41a442",
+      "status": 200,
+      "durationMs": 5
+    },
+    {
+      "method": "POST",
+      "path": "/api/quotes",
+      "status": 200,
+      "durationMs": 4
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/analytics?from=2000-01-01T00:00:00Z&to=2000-01-04T00:00:00Z&group=day&category=CPU",
+      "status": 200,
+      "durationMs": 8
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts",
+      "status": 200,
+      "durationMs": 5
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/b6224eb1-9a67-4193-b969-31de99ac0328/reserve",
+      "status": 409,
+      "durationMs": 5
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts",
+      "status": 200,
+      "durationMs": 5
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/8e25d20e-7503-4f08-af66-32a3e7599b3a/reserve",
+      "status": 200,
+      "durationMs": 7
+    },
+    {
+      "method": "GET",
+      "path": "/api/carts/8e25d20e-7503-4f08-af66-32a3e7599b3a",
+      "status": 200,
+      "durationMs": 4
+    },
+    {
+      "method": "POST",
+      "path": "/api/carts/8e25d20e-7503-4f08-af66-32a3e7599b3a/confirm",
+      "status": 409,
+      "durationMs": 4
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/analytics?from=2026-11-07T12%3A55%3A15.718Z&to=2026-11-09T12%3A55%3A15.719Z&group=day",
+      "status": 200,
+      "durationMs": 3
+    },
+    {
+      "method": "POST",
+      "path": "/api/recommendations/builds",
+      "status": 200,
+      "durationMs": 362
+    }
+  ]
+}

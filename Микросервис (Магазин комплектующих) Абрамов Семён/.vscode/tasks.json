@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Shop API build",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "PcShop.slnx"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Shop API run",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "src/PcShop.Api"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Shop domain tests",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "tests/PcShop.Tests"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Shop frontend",
+      "type": "shell",
+      "command": "npm.cmd run dev",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

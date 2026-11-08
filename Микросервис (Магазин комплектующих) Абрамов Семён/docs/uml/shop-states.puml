@@ -1,0 +1,21 @@
+@startuml
+[*] --> DRAFT
+DRAFT --> DRAFT : новое предложение
+DRAFT --> RESERVED : действующий Quote и все остатки
+DRAFT --> CANCELLED : отмена
+RESERVED --> CONFIRMED : подтверждение до expiresAt
+RESERVED --> CANCELLED : отмена
+RESERVED --> EXPIRED : expiresAt <= now
+CONFIRMED --> [*]
+CANCELLED --> [*]
+EXPIRED --> [*]
+note right of RESERVED
+Продаж ещё нет
+Физический остаток не уменьшен
+end note
+note right of CONFIRMED
+Одна неизменяемая SaleLine
+на позицию
+end note
+@enduml
+

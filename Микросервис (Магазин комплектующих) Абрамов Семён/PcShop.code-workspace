@@ -1,0 +1,12 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.encoding": "utf8",
+    "typescript.tsdk": "frontend/node_modules/typescript/lib",
+    "editor.formatOnSave": false
+  }
+}

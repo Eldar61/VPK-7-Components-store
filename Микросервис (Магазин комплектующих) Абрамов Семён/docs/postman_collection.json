@@ -1,0 +1,662 @@
+{
+  "info": {
+    "name": "ВПК-7 Магазин комплектующих Семёна",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Локальные учебные примеры. Для нового заказа измените importKey/operationKey. Резерв и confirm выполняются отдельными действиями."
+  },
+  "variable": [
+    {
+      "key": "base",
+      "value": "http://localhost:5081",
+      "type": "string"
+    },
+    {
+      "key": "serviceKey",
+      "value": "development-only-service-key",
+      "type": "string"
+    },
+    {
+      "key": "login",
+      "value": "shop-demo",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "Example-password-123!",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "customerCartId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "customerQuoteId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "serviceCartId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "serviceQuoteId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "importKey",
+      "value": "demo-import-1",
+      "type": "string"
+    },
+    {
+      "key": "externalConfigurationId",
+      "value": "e1410000-0000-4000-a000-000000000001",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Каталог",
+      "item": [
+        {
+          "name": "Готовность БД",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/health/ready"
+          }
+        },
+        {
+          "name": "Публичный каталог",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base}}/api/catalog"
+          }
+        },
+        {
+          "name": "Подбор полного ПК",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/api/recommendations/builds",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"budgetRub\": 200000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Покупатель",
+      "item": [
+        {
+          "name": "Регистрация",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code < 300) { const data = pm.response.json(); pm.collectionVariables.set('token',data.token); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Вход",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"{{login}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code < 300) { const data = pm.response.json(); pm.collectionVariables.set('token',data.token); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Предложение",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base}}/api/customer/quotes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"productId\": \"91475241-15b7-4271-a32a-45356dd32428\",\n      \"category\": \"CPU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"c04f5eba-4c86-48b7-a854-74998e5ab3c9\",\n      \"category\": \"MOTHERBOARD\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"97f98560-e692-496e-af95-d7801bf0d8d4\",\n      \"category\": \"RAM\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"33f9c397-3356-445b-a95d-2ba7a195b5cc\",\n      \"category\": \"GPU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"e9e6dc79-a648-483d-a924-4415139e7b14\",\n      \"category\": \"PSU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"c908a702-46fa-412c-ac3f-1a72a0662c76\",\n      \"category\": \"CASE\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"13fa6a00-c988-44b1-a838-ca8e33092ad8\",\n      \"category\": \"STORAGE\",\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Создать корзину",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base}}/api/customer/carts",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"productId\": \"91475241-15b7-4271-a32a-45356dd32428\",\n      \"category\": \"CPU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"c04f5eba-4c86-48b7-a854-74998e5ab3c9\",\n      \"category\": \"MOTHERBOARD\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"97f98560-e692-496e-af95-d7801bf0d8d4\",\n      \"category\": \"RAM\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"33f9c397-3356-445b-a95d-2ba7a195b5cc\",\n      \"category\": \"GPU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"e9e6dc79-a648-483d-a924-4415139e7b14\",\n      \"category\": \"PSU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"c908a702-46fa-412c-ac3f-1a72a0662c76\",\n      \"category\": \"CASE\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"13fa6a00-c988-44b1-a838-ca8e33092ad8\",\n      \"category\": \"STORAGE\",\n      \"quantity\": 1\n    }\n  ],\n  \"operationKey\": \"customer-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code < 300) { const data = pm.response.json(); pm.collectionVariables.set('customerCartId',data.id);pm.collectionVariables.set('customerQuoteId',data.quote.id); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Мои корзины",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base}}/api/customer/carts"
+          }
+        },
+        {
+          "name": "quote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base}}/api/customer/carts/{{customerCartId}}/quote",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quoteId\": \"{{customerQuoteId}}\",\n  \"operationKey\": \"quote-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code < 300) { const data = pm.response.json(); pm.collectionVariables.set('customerQuoteId',data.quote.id); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "reserve",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base}}/api/customer/carts/{{customerCartId}}/reserve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quoteId\": \"{{customerQuoteId}}\",\n  \"operationKey\": \"reserve-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "confirm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base}}/api/customer/carts/{{customerCartId}}/confirm",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quoteId\": \"{{customerQuoteId}}\",\n  \"operationKey\": \"confirm-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "cancel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base}}/api/customer/carts/{{customerCartId}}/cancel",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quoteId\": \"{{customerQuoteId}}\",\n  \"operationKey\": \"cancel-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Контракт сборщика",
+      "item": [
+        {
+          "name": "Товары для сборщика",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Service-Key",
+                "value": "{{serviceKey}}"
+              }
+            ],
+            "url": "{{base}}/api/products"
+          }
+        },
+        {
+          "name": "Гостевое предложение",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Service-Key",
+                "value": "{{serviceKey}}"
+              }
+            ],
+            "url": "{{base}}/api/quotes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"productId\": \"91475241-15b7-4271-a32a-45356dd32428\",\n      \"category\": \"CPU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"c04f5eba-4c86-48b7-a854-74998e5ab3c9\",\n      \"category\": \"MOTHERBOARD\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"97f98560-e692-496e-af95-d7801bf0d8d4\",\n      \"category\": \"RAM\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"33f9c397-3356-445b-a95d-2ba7a195b5cc\",\n      \"category\": \"GPU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"e9e6dc79-a648-483d-a924-4415139e7b14\",\n      \"category\": \"PSU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"c908a702-46fa-412c-ac3f-1a72a0662c76\",\n      \"category\": \"CASE\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"13fa6a00-c988-44b1-a838-ca8e33092ad8\",\n      \"category\": \"STORAGE\",\n      \"quantity\": 1\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Импорт сборки",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Service-Key",
+                "value": "{{serviceKey}}"
+              }
+            ],
+            "url": "{{base}}/api/carts",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"externalConfigurationId\": \"{{externalConfigurationId}}\",\n  \"items\": [\n    {\n      \"productId\": \"91475241-15b7-4271-a32a-45356dd32428\",\n      \"category\": \"CPU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"c04f5eba-4c86-48b7-a854-74998e5ab3c9\",\n      \"category\": \"MOTHERBOARD\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"97f98560-e692-496e-af95-d7801bf0d8d4\",\n      \"category\": \"RAM\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"33f9c397-3356-445b-a95d-2ba7a195b5cc\",\n      \"category\": \"GPU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"e9e6dc79-a648-483d-a924-4415139e7b14\",\n      \"category\": \"PSU\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"c908a702-46fa-412c-ac3f-1a72a0662c76\",\n      \"category\": \"CASE\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"13fa6a00-c988-44b1-a838-ca8e33092ad8\",\n      \"category\": \"STORAGE\",\n      \"quantity\": 1\n    }\n  ],\n  \"operationKey\": \"{{importKey}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code < 300) { const data = pm.response.json(); pm.collectionVariables.set('serviceCartId',data.id);pm.collectionVariables.set('serviceQuoteId',data.quote.id); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Состояние",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Service-Key",
+                "value": "{{serviceKey}}"
+              }
+            ],
+            "url": "{{base}}/api/carts/{{serviceCartId}}"
+          }
+        },
+        {
+          "name": "quote",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Service-Key",
+                "value": "{{serviceKey}}"
+              }
+            ],
+            "url": "{{base}}/api/carts/{{serviceCartId}}/quote",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quoteId\": \"{{serviceQuoteId}}\",\n  \"operationKey\": \"quote-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code < 300) { const data = pm.response.json(); pm.collectionVariables.set('serviceQuoteId',data.quote.id); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "reserve",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Service-Key",
+                "value": "{{serviceKey}}"
+              }
+            ],
+            "url": "{{base}}/api/carts/{{serviceCartId}}/reserve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quoteId\": \"{{serviceQuoteId}}\",\n  \"operationKey\": \"reserve-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "confirm",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Service-Key",
+                "value": "{{serviceKey}}"
+              }
+            ],
+            "url": "{{base}}/api/carts/{{serviceCartId}}/confirm",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quoteId\": \"{{serviceQuoteId}}\",\n  \"operationKey\": \"confirm-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "cancel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Service-Key",
+                "value": "{{serviceKey}}"
+              }
+            ],
+            "url": "{{base}}/api/carts/{{serviceCartId}}/cancel",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quoteId\": \"{{serviceQuoteId}}\",\n  \"operationKey\": \"cancel-demo-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Администратор",
+      "item": [
+        {
+          "name": "Вход администратора",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"admin\",\n  \"password\": \"Shop-local-admin-2026!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code < 300) { const data = pm.response.json(); pm.collectionVariables.set('adminToken',data.token); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Склад и карточки",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{base}}/api/admin/products"
+          }
+        },
+        {
+          "name": "Покупатели",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{base}}/api/admin/users"
+          }
+        },
+        {
+          "name": "Статистика",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": "{{base}}/api/admin/analytics?from=2026-11-01T00:00:00%2B03:00&to=2026-12-01T00:00:00%2B03:00&group=day"
+          }
+        }
+      ]
+    }
+  ]
+}

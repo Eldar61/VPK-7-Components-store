@@ -1,0 +1,119 @@
+[
+  {
+    "category": "CPU",
+    "sku": "Intel-Core-i3-14100F",
+    "name": "Intel Core i3-14100F",
+    "specs": {
+      "socket": "LGA1700",
+      "estimatedPowerW": 110
+    },
+    "sourceUrl": "https://www.intel.com/content/www/us/en/products/sku/236786/intel-core-i3-processor-14100f-12m-cache-up-to-4-70-ghz/specifications.html",
+    "powerBasis": "Оценка по Intel Maximum Turbo Power 110 Вт. Не измерение текущего потребления.",
+    "facts": {
+      "socketsSupported": "FCLGA1700",
+      "processorBasePowerW": 58,
+      "maximumTurboPowerW": 110
+    }
+  },
+  {
+    "category": "CPU",
+    "sku": "Intel-Core-i5-14600K",
+    "name": "Intel Core i5-14600K",
+    "specs": {
+      "socket": "LGA1700",
+      "estimatedPowerW": 181
+    },
+    "sourceUrl": "https://www.intel.com/content/www/us/en/products/sku/236799/intel-core-i5-processor-14600k-24m-cache-up-to-5-30-ghz/specifications.html",
+    "powerBasis": "Оценка по Intel Maximum Turbo Power 181 Вт. Не измерение текущего потребления.",
+    "facts": {
+      "socketsSupported": "FCLGA1700",
+      "processorBasePowerW": 125,
+      "maximumTurboPowerW": 181
+    }
+  },
+  {
+    "category": "STORAGE",
+    "sku": "MZ-77E250BW",
+    "name": "Samsung 870 EVO 250GB",
+    "specs": {
+      "storageInterface": "SATA",
+      "driveForm": "2.5",
+      "estimatedPowerW": 5
+    },
+    "sourceUrl": "https://download.semiconductor.samsung.com/resources/data-sheet/Samsung_SSD_870_EVO_Data_Sheet_Rev1.1_230509.pdf",
+    "powerBasis": "Учебная оценка мощности SATA SSD 5 Вт. Не паспортное измерение.",
+    "facts": {
+      "capacity": "250GB",
+      "interface": "SATA 6 Gb/s",
+      "formFactor": "2.5 inch"
+    }
+  },
+  {
+    "category": "STORAGE",
+    "sku": "MZ-77E500BW",
+    "name": "Samsung 870 EVO 500GB",
+    "specs": {
+      "storageInterface": "SATA",
+      "driveForm": "2.5",
+      "estimatedPowerW": 5
+    },
+    "sourceUrl": "https://download.semiconductor.samsung.com/resources/data-sheet/Samsung_SSD_870_EVO_Data_Sheet_Rev1.1_230509.pdf",
+    "powerBasis": "Учебная оценка мощности SATA SSD 5 Вт. Не паспортное измерение.",
+    "facts": {
+      "capacity": "500GB",
+      "interface": "SATA 6 Gb/s",
+      "formFactor": "2.5 inch"
+    }
+  },
+  {
+    "category": "STORAGE",
+    "sku": "MZ-77E1T0BW",
+    "name": "Samsung 870 EVO 1TB",
+    "specs": {
+      "storageInterface": "SATA",
+      "driveForm": "2.5",
+      "estimatedPowerW": 5
+    },
+    "sourceUrl": "https://download.semiconductor.samsung.com/resources/data-sheet/Samsung_SSD_870_EVO_Data_Sheet_Rev1.1_230509.pdf",
+    "powerBasis": "Учебная оценка мощности SATA SSD 5 Вт. Не паспортное измерение.",
+    "facts": {
+      "capacity": "1TB",
+      "interface": "SATA 6 Gb/s",
+      "formFactor": "2.5 inch"
+    }
+  },
+  {
+    "category": "STORAGE",
+    "sku": "MZ-77E2T0BW",
+    "name": "Samsung 870 EVO 2TB",
+    "specs": {
+      "storageInterface": "SATA",
+      "driveForm": "2.5",
+      "estimatedPowerW": 5
+    },
+    "sourceUrl": "https://download.semiconductor.samsung.com/resources/data-sheet/Samsung_SSD_870_EVO_Data_Sheet_Rev1.1_230509.pdf",
+    "powerBasis": "Учебная оценка мощности SATA SSD 5 Вт. Не паспортное измерение.",
+    "facts": {
+      "capacity": "2TB",
+      "interface": "SATA 6 Gb/s",
+      "formFactor": "2.5 inch"
+    }
+  },
+  {
+    "category": "STORAGE",
+    "sku": "MZ-77E4T0BW",
+    "name": "Samsung 870 EVO 4TB",
+    "specs": {
+      "storageInterface": "SATA",
+      "driveForm": "2.5",
+      "estimatedPowerW": 5
+    },
+    "sourceUrl": "https://download.semiconductor.samsung.com/resources/data-sheet/Samsung_SSD_870_EVO_Data_Sheet_Rev1.1_230509.pdf",
+    "powerBasis": "Учебная оценка мощности SATA SSD 5 Вт. Не паспортное измерение.",
+    "facts": {
+      "capacity": "4TB",
+      "interface": "SATA 6 Gb/s",
+      "formFactor": "2.5 inch"
+    }
+  }
+]

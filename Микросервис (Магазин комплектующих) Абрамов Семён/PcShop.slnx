@@ -1,0 +1,1 @@
+<Solution><Project Path="src/PcShop.Domain/PcShop.Domain.csproj" /><Project Path="src/PcShop.Api/PcShop.Api.csproj" /><Project Path="tests/PcShop.Tests/PcShop.Tests.csproj" /></Solution>

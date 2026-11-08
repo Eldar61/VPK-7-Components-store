@@ -1,0 +1,90 @@
+@base = http://localhost:5081
+@serviceKey = development-only-service-key
+
+### Регистрация (для повтора поменяйте логин либо выполните login)
+# @name registration
+POST {{base}}/api/auth/register
+Content-Type: application/json
+
+{"login":"shop-demo","password":"Example-password-123!"}
+
+@token = {{registration.response.body.token}}
+
+### Каталог
+GET {{base}}/api/catalog
+
+### Создать корзину
+# @name cart
+POST {{base}}/api/customer/carts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "productId": "91475241-15b7-4271-a32a-45356dd32428",
+      "category": "CPU",
+      "quantity": 1
+    },
+    {
+      "productId": "c04f5eba-4c86-48b7-a854-74998e5ab3c9",
+      "category": "MOTHERBOARD",
+      "quantity": 1
+    },
+    {
+      "productId": "97f98560-e692-496e-af95-d7801bf0d8d4",
+      "category": "RAM",
+      "quantity": 1
+    },
+    {
+      "productId": "33f9c397-3356-445b-a95d-2ba7a195b5cc",
+      "category": "GPU",
+      "quantity": 1
+    },
+    {
+      "productId": "e9e6dc79-a648-483d-a924-4415139e7b14",
+      "category": "PSU",
+      "quantity": 1
+    },
+    {
+      "productId": "c908a702-46fa-412c-ac3f-1a72a0662c76",
+      "category": "CASE",
+      "quantity": 1
+    },
+    {
+      "productId": "13fa6a00-c988-44b1-a838-ca8e33092ad8",
+      "category": "STORAGE",
+      "quantity": 1
+    }
+  ],
+  "operationKey": "customer-demo-1"
+}
+
+### Резерв (сначала проверьте цену из ответа cart)
+POST {{base}}/api/customer/carts/{{cart.response.body.id}}/reserve
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"quoteId":"{{cart.response.body.quote.id}}","operationKey":"reserve-demo-1"}
+
+### Подтверждение учебной покупки
+POST {{base}}/api/customer/carts/{{cart.response.body.id}}/confirm
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"quoteId":"{{cart.response.body.quote.id}}","operationKey":"confirm-demo-1"}
+
+### Межсервисный каталог
+GET {{base}}/api/products
+X-Service-Key: {{serviceKey}}
+
+### Вход администратора
+# @name admin
+POST {{base}}/api/auth/login
+Content-Type: application/json
+
+{"login":"admin","password":"Shop-local-admin-2026!"}
+
+### Аналитика
+GET {{base}}/api/admin/analytics?from=2026-11-01T00:00:00%2B03:00&to=2026-12-01T00:00:00%2B03:00&group=day
+Authorization: Bearer {{admin.response.body.token}}

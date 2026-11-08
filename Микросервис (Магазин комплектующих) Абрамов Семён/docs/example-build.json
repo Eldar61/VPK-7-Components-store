@@ -1,0 +1,41 @@
+{
+  "name": "Verified real catalog build",
+  "budgetRub": 200000,
+  "items": [
+    {
+      "productId": "91475241-15b7-4271-a32a-45356dd32428",
+      "category": "CPU",
+      "quantity": 1
+    },
+    {
+      "productId": "c04f5eba-4c86-48b7-a854-74998e5ab3c9",
+      "category": "MOTHERBOARD",
+      "quantity": 1
+    },
+    {
+      "productId": "97f98560-e692-496e-af95-d7801bf0d8d4",
+      "category": "RAM",
+      "quantity": 1
+    },
+    {
+      "productId": "33f9c397-3356-445b-a95d-2ba7a195b5cc",
+      "category": "GPU",
+      "quantity": 1
+    },
+    {
+      "productId": "e9e6dc79-a648-483d-a924-4415139e7b14",
+      "category": "PSU",
+      "quantity": 1
+    },
+    {
+      "productId": "c908a702-46fa-412c-ac3f-1a72a0662c76",
+      "category": "CASE",
+      "quantity": 1
+    },
+    {
+      "productId": "13fa6a00-c988-44b1-a838-ca8e33092ad8",
+      "category": "STORAGE",
+      "quantity": 1
+    }
+  ]
+}

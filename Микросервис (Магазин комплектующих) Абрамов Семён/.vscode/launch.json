@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "API магазина",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "Shop API build",
+      "program": "${workspaceFolder}/src/PcShop.Api/bin/Debug/net10.0/PcShop.Api.dll",
+      "cwd": "${workspaceFolder}/src/PcShop.Api",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5081"
+      }
+    }
+  ]
+}

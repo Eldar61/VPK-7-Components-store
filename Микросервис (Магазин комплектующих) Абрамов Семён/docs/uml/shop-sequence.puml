@@ -1,0 +1,41 @@
+@startuml
+actor Buyer
+participant ShopUI
+participant ShopApi
+participant CommerceService
+database ShopDb
+participant AssemblyApi
+Buyer -> ShopUI: Выбрать состав
+ShopUI -> ShopApi: POST customer/carts
+ShopApi -> CommerceService: Create(owner,items,key)
+CommerceService -> ShopDb: transaction + advisory lock
+CommerceService -> ShopDb: товары + резервы + тип покупателя
+CommerceService -> ShopDb: Quote + Cart + Operation
+ShopDb --> CommerceService: commit
+CommerceService --> ShopApi: DRAFT + Quote
+ShopApi --> ShopUI: DRAFT + Quote
+Buyer -> ShopUI: Зарезервировать
+ShopUI -> ShopApi: reserve(quoteId,key)
+ShopApi -> CommerceService: Act
+CommerceService -> ShopDb: transaction, проверить цену и остатки
+alt все позиции доступны
+ CommerceService -> ShopDb: RESERVED + snapshot + Operation
+ ShopApi --> ShopUI: RESERVED
+else цена/остаток/срок изменились
+ ShopApi --> ShopUI: 409
+end
+opt подбор полного комплекта
+ ShopApi -> AssemblyApi: POST compatibility/check(items,products)
+ AssemblyApi --> ShopApi: compatible/errors/power
+ note right: Чистый endpoint не обращается в магазин
+end
+opt подтверждение
+ ShopUI -> ShopApi: confirm
+ ShopApi -> CommerceService: Act(confirm,quoteId,key)
+ CommerceService -> ShopDb: transaction: stock -= qty, SaleLine, CONFIRMED
+ ShopDb --> CommerceService: commit
+ CommerceService --> ShopApi: CONFIRMED
+ ShopApi --> ShopUI: CONFIRMED
+end
+@enduml
+
