@@ -1,0 +1,42 @@
+@base = http://localhost:5080
+@serviceKey = development-only-service-key
+
+### Регистрация (измените логин перед повтором)
+# @name registration
+POST {{base}}/api/auth/register
+Content-Type: application/json
+
+{"login":"eldar-demo","password":"Example-password-123!"}
+
+### Токен берётся из ответа регистрации REST Client
+@token = {{registration.response.body.token}}
+
+### Каталог
+GET {{base}}/api/products
+
+### Создание черновика
+# @name draft
+POST {{base}}/api/configurations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{"name":"Мой ПК","budgetRub":120000,"items":[{"productId":"00000000-0000-0000-0000-000000000001","category":"CPU","quantity":1},{"productId":"00000000-0000-0000-0000-000000000002","category":"MOTHERBOARD","quantity":1},{"productId":"00000000-0000-0000-0000-000000000003","category":"RAM","quantity":2},{"productId":"00000000-0000-0000-0000-000000000004","category":"GPU","quantity":1},{"productId":"00000000-0000-0000-0000-000000000005","category":"PSU","quantity":1},{"productId":"00000000-0000-0000-0000-000000000006","category":"CASE","quantity":1},{"productId":"00000000-0000-0000-0000-000000000007","category":"STORAGE","quantity":1}]}
+
+### Полная проверка
+POST {{base}}/api/configurations/{{draft.response.body.id}}/evaluate
+Authorization: Bearer {{token}}
+
+### Сохранение
+POST {{base}}/api/configurations/{{draft.response.body.id}}/save
+Authorization: Bearer {{token}}
+
+### Публичная гистограмма
+GET {{base}}/api/statistics/price-buckets
+
+### Мои конфигурации
+GET {{base}}/api/configurations
+Authorization: Bearer {{token}}
+
+### Создать магазинную корзину
+POST {{base}}/api/configurations/{{draft.response.body.id}}/cart
+Authorization: Bearer {{token}}

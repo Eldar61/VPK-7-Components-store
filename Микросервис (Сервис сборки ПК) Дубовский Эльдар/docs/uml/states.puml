@@ -1,0 +1,33 @@
+@startuml
+title Два независимых жизненных цикла
+state "Конфигурация — сервис Эльдара" as Config {
+ [*] --> DRAFT
+ DRAFT --> CHECKING : evaluate
+ INVALID --> CHECKING : повтор evaluate
+ VALID --> CHECKING : повтор evaluate
+ CHECKING --> INVALID : технические ошибки
+ CHECKING --> VALID : техническая проверка пройдена
+ state Recover <<choice>>
+ CHECKING --> Recover : магазин не вернул характеристики
+ Recover --> DRAFT : [previousStatus = DRAFT]
+ Recover --> INVALID : [previousStatus = INVALID]
+ Recover --> VALID : [previousStatus = VALID]
+ INVALID --> DRAFT : изменить состав
+ VALID --> DRAFT : изменить состав / бюджет
+ VALID --> SAVED : save [Quote существует и не истёк]
+ SAVED --> SAVED : повтор save / просмотр
+ note right of SAVED : Неизменяемая версия.\nКопирование создаёт другой DRAFT.\nНет финального состояния после резерва.
+}
+state "Корзина — магазин Семёна" as Cart {
+ [*] --> CartDraft
+ CartDraft --> RESERVED : reserve [Quote актуален, всё в наличии]
+ CartDraft --> CANCELLED : cancel
+ RESERVED --> CONFIRMED : confirm [резерв действует]
+ RESERVED --> CANCELLED : cancel
+ RESERVED --> EXPIRED : expiresAt <= now
+ CONFIRMED --> [*]
+ CANCELLED --> [*]
+ EXPIRED --> [*]
+}
+note bottom of Config : CHECKING — логический этап запроса, в БД он не записывается.\nПри ошибке получения характеристик сохраняется любой прежний статус, а не только DRAFT.
+@enduml

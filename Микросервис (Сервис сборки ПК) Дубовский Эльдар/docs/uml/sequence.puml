@@ -1,0 +1,93 @@
+@startuml
+title Сборка ПК — порядок вызовов
+actor Buyer
+boundary AssemblyUI
+control "ConfigurationController\n(HTTP endpoints в Program.cs)" as ConfigurationController
+control ConfigurationService
+database AssemblyDb
+control ShopClient
+participant ShopApi
+control CompatibilityChecker
+control PowerCalculator
+control RecommendationService
+Buyer -> AssemblyUI: создать конфигурацию
+AssemblyUI -> ConfigurationController: POST /configurations
+ConfigurationController -> ConfigurationService: Create
+ConfigurationService -> AssemblyDb: INSERT DRAFT, ownerId
+loop изменение и повторная проверка
+  AssemblyUI -> ConfigurationController: PUT /configurations/{id} (version)
+  ConfigurationController -> ConfigurationService: Update
+  ConfigurationService -> AssemblyDb: UPDATE с проверкой владельца/version
+  AssemblyUI -> ConfigurationController: POST /evaluate
+  ConfigurationController -> ConfigurationService: Evaluate
+  ConfigurationService -> ShopClient: Products(items)
+  ShopClient -> ShopApi: GET /products?ids=...
+  alt магазин недоступен
+    ShopApi --> ShopClient: 5xx / timeout
+    ConfigurationService --> AssemblyUI: 503, прежний статус сохраняется
+  else характеристики получены
+    ShopApi --> ShopClient: Product[]
+    ShopClient --> ConfigurationService: Product[]
+    ConfigurationService -> CompatibilityChecker: Check(items, products)
+    CompatibilityChecker -> PowerCalculator: сумма мощностей, ceil(*1.25)
+    PowerCalculator --> CompatibilityChecker: totalPower, requiredPsu, slices
+    CompatibilityChecker --> ConfigurationService: errors, compatible, power
+    alt технически несовместима
+      ConfigurationService -> AssemblyDb: INVALID + результат
+    else технически совместима
+      ConfigurationService -> ShopClient: Quote(items)
+      ShopClient -> ShopApi: POST /quotes
+      alt предложение получено
+        ShopApi --> ConfigurationService: Quote с ценой и наличием
+        ConfigurationService -> ConfigurationService: отдельно сравнить цену с бюджетом
+        ConfigurationService -> AssemblyDb: VALID + снимки результата/товаров
+      else ошибка магазина
+        ConfigurationService -> AssemblyDb: VALID + externalError, без Quote
+      end
+    end
+    ConfigurationService --> AssemblyUI: Evaluation
+    opt запрос рекомендаций
+      ConfigurationService -> RecommendationService: получить кандидатов
+      RecommendationService -> ShopClient: Catalog
+      loop замена одной детали
+        RecommendationService -> CompatibilityChecker: полная проверка изменённой сборки
+        RecommendationService -> ShopClient: Quote при совместимости
+      end
+      RecommendationService --> AssemblyUI: до 3 допустимых замен
+    end
+  end
+end
+opt пользователь сохраняет
+  AssemblyUI -> ConfigurationService: POST /save
+  alt Quote истёк или проверки нет
+    ConfigurationService --> AssemblyUI: 409, повторить проверку
+  else полная проверка и действующий Quote
+    ConfigurationService -> AssemblyDb: SAVED + неизменяемая цена (однократно)
+    ConfigurationService --> AssemblyUI: ConfigurationView
+  end
+end
+opt оформление сохранённой сборки
+  AssemblyUI -> ConfigurationService: POST /cart
+  ConfigurationService -> ShopClient: CartRequest с operationKey
+  ShopClient -> ShopApi: POST /carts
+  ShopApi --> ConfigurationService: ShopCart
+  ConfigurationService -> AssemblyDb: только cartId
+  Buyer -> AssemblyUI: принять цену и резервировать
+  AssemblyUI -> ConfigurationService: POST /cart/reserve (quoteId, key)
+  ConfigurationService -> ShopApi: через ShopClient: reserve
+  alt цена/остаток/срок изменились
+    ShopApi --> AssemblyUI: 409, обновить Quote/состояние
+  else резерв создан
+    ShopApi --> AssemblyUI: RESERVED
+    alt подтверждение
+      AssemblyUI -> ConfigurationService: POST /cart/confirm
+      ConfigurationService -> ShopApi: через ShopClient: confirm
+      ShopApi --> AssemblyUI: CONFIRMED
+    else отмена / истечение
+      AssemblyUI -> ConfigurationService: cancel или GET /cart
+      ConfigurationService -> ShopApi: через ShopClient
+      ShopApi --> AssemblyUI: CANCELLED / EXPIRED
+    end
+  end
+end
+@enduml

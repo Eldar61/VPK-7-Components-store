@@ -1,0 +1,12 @@
+export type Category = 'CPU'|'MOTHERBOARD'|'RAM'|'GPU'|'PSU'|'CASE'|'STORAGE';
+export const categories:Category[]=['CPU','MOTHERBOARD','RAM','GPU','PSU','CASE','STORAGE'];
+export const labels:Record<Category,string>={CPU:'Процессор',MOTHERBOARD:'Материнская плата',RAM:'Оперативная память',GPU:'Видеокарта',PSU:'Блок питания',CASE:'Корпус',STORAGE:'Накопители'};
+export type Selection={productId:string;category:Category;quantity:number};
+export type Product={id:string;name:string;category:Category;active:boolean;priceRub:number;availableQuantity:number;specs:Record<string,unknown>};
+export type Issue={code:string;message:string;productIds:string[]};
+export type Power={totalPowerW:number;requiredPsuW:number;slices:{productId:string;name:string;watts:number;percent:number}[]};
+export type Quote={id:string;expiresAt:string;totalRub:number;available:boolean;lines:{productId:string;quantity:number;unitPriceRub:number;discountPercent:number;totalRub:number;available:boolean}[]};
+export type Evaluation={technical:{compatible:boolean;errors:Issue[];warnings:Issue[];power:Power|null};quote:Quote|null;available:boolean|null;withinBudget:boolean|null;externalError:string|null;checkedAt:string};
+export type Configuration={id:string;name:string;budgetRub:number;items:Selection[];status:string;version:number;savedAt:string|null;savedPriceRub:number|null;evaluation:Evaluation|null;products:Product[]|null;cartId:string|null};
+export type Cart={id:string;status:string;quote:Quote|null;reservationId:string|null;expiresAt:string|null};
+export type Bucket={fromRub:number;toRub:number;count:number};

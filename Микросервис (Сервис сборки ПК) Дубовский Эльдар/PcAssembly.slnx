@@ -1,0 +1,1 @@
+<Solution><Project Path="src/PcAssembly.Domain/PcAssembly.Domain.csproj"/><Project Path="src/PcAssembly.Api/PcAssembly.Api.csproj"/><Project Path="tests/PcAssembly.Tests/PcAssembly.Tests.csproj"/><Project Path="tools/ShopStub/ShopStub.csproj"/></Solution>

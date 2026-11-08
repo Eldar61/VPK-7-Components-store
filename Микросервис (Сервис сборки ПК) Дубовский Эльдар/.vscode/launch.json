@@ -1,0 +1,1 @@
+{"version":"0.2.0","configurations":[{"name":"API сборки ПК","type":"coreclr","request":"launch","preLaunchTask":"API: build","program":"${workspaceFolder}/src/PcAssembly.Api/bin/Debug/net10.0/PcAssembly.Api.dll","cwd":"${workspaceFolder}/src/PcAssembly.Api","env":{"ASPNETCORE_ENVIRONMENT":"Development","ASPNETCORE_URLS":"http://localhost:5080"},"console":"integratedTerminal"}]}
